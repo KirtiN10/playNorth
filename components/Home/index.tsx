@@ -101,7 +101,7 @@ const Home = ({ config }: HomeProps) => {
                   </div>
                 )) : (
                   <span>
-                    No Data
+                    No Game
                   </span>
                 )}
           </section>
