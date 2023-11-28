@@ -12,6 +12,8 @@ interface HomeProps {
 
 const Home = ({ config }: HomeProps) => {
   const { items } = config?.menu?.lobby || [];
+
+  //sorted category
   items.sort((a, b) => a.name.localeCompare(b.name));
 
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -37,10 +39,18 @@ const Home = ({ config }: HomeProps) => {
     if (selectedCategory) {
       const parts = selectedCategory.split('/');
       const slug = parts[parts.length - 1];
+
+      // sent empty category if all games selected
       const _slug = slug === "all-games" ? "" : slug
       dispatch(gameApi({ category: _slug, search: mainSearch }))
     }
-  }, [selectedCategory, mainSearch])
+  }, [selectedCategory, mainSearch]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearch();
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -64,8 +74,9 @@ const Home = ({ config }: HomeProps) => {
             <input
               type="text"
               className={styles.formControl}
-              placeholder="Search...."
+              placeholder="Search Game"
               value={search}
+              onKeyDown={handleKeyDown}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
             <button

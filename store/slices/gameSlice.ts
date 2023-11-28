@@ -6,6 +6,7 @@ export const gameApi = createAsyncThunk(
     async ({ search, category }: { search?: string, category?: string }) => {
 
         const params = new URLSearchParams();
+        // conditions for category or search filter
         if (category) {
             params.append("gameCategories", category)
         }
